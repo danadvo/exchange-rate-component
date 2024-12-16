@@ -1,0 +1,13 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  align-items: 'center';
+  height: '100vh';
+  gap: 30px;
+}
+h1{
+  display: flex;
+  align-self: center;
+}
