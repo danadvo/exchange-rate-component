@@ -15,7 +15,6 @@ function App() {
     today: formatDate(today),
   });
   const { data, isLoading, isError, error } = useHistoricalExchangeRates(dateRange.from ,getDaysBetweenDates(dateRange.from, dateRange.to));
-  useEffect(()=>console.log(data),[data])
 
   return (
     <div className="App">
