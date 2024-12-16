@@ -21,3 +21,5 @@ To get the project up and running locally, follow these steps:
     npm start
 
 This will start the development server, and you can view the project in your browser at http://localhost:3000.
+
+<img width="1379" alt="Screenshot 2024-12-16 at 15 34 26" src="https://github.com/user-attachments/assets/1a4add03-87a8-4b06-802f-53e1e34c1d32" />
