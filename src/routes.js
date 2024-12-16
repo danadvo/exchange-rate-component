@@ -11,7 +11,7 @@ const fetchDailyILSExchangeRate = async (date) => {
 
 const fetchILSExchangeRatesForRange = async (startDate, days) => {
     const requests = [];
-    for (let i = 0; i < days; i++) {
+    for (let i = 0; i <= days; i++) {
         const date = new Date(startDate);
         date.setDate(date.getDate() + i);
         const formattedDate = formatDate(date);

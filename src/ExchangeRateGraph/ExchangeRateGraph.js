@@ -28,7 +28,10 @@ const ExchangeRateGraph = ({ data }) => {
   return (
     <div className="exchange-rate-graph">
         <ResponsiveContainer width="100%" height="100%" >
-        <LineChart data={dataWithPercentageChange}>
+        <LineChart 
+            data={dataWithPercentageChange}   
+            margin={{ top: 20, right: 20, left: 20, bottom: 40 }}
+        >
             <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
             <XAxis dataKey="date" />
             <YAxis />
