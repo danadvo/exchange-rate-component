@@ -1,4 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
+  import {useState} from 'react';
+import { useQueries } from '@tanstack/react-query';
 import { APP_ID, DAY, formatDate, WEEK } from './utils';
 
 const fetchDailyILSExchangeRate = async (date) => {
@@ -6,27 +7,51 @@ const fetchDailyILSExchangeRate = async (date) => {
     if (!response.ok) {
       throw new Error(`Failed to fetch data for ${date}`);
     }
-    return response.json();
+    const data = await response.json();
+    return data.rates?.ILS ?? 0;
 }
 
-const fetchILSExchangeRatesForRange = async (startDate, days) => {
-    const requests = [];
+const getDatesInRange = (startDate, days) => {
+    const dates = [];
     for (let i = 0; i <= days; i++) {
         const date = new Date(startDate);
         date.setDate(date.getDate() + i);
-        const formattedDate = formatDate(date);
-        requests.push(fetchDailyILSExchangeRate(formattedDate));
+        dates.push(formatDate(date));
     }
-    return Promise.all(requests);
+    return dates;
 }
 
 export const useHistoricalExchangeRates = (startDate, days) => {
-    return useQuery({
-        queryKey: ['exchangeRates', startDate, days],
-        queryFn: () => fetchILSExchangeRatesForRange(startDate, days),
-        enabled: !!startDate,
-        staleTime: DAY,
-        cacheTime: WEEK, 
-        refetchOnWindowFocus: false,
-      });
+    const dates = getDatesInRange(startDate,days);
+    const queries = useQueries({
+        queries: dates.map(date => ({ 
+            queryKey: ['ILSRate', date],
+            queryFn: async () => {
+                const ILSRate = await fetchDailyILSExchangeRate(date);
+                return {date, ILSRate};
+            },
+            enabled: !!date,
+            staleTime: DAY, 
+            cacheTime: WEEK, 
+            refetchOnWindowFocus: false
+        })
+        )
+    });
+    
+    const allQueriesDone = queries.every((query) => query.isSuccess || query.isError);
+    
+    if (allQueriesDone) {
+        const processedData = queries.map((query) => query.data);
+        return {
+            data: processedData,
+            isLoading: false,
+            isError: queries.some((query) => query.isError),
+        };
+      }
+
+    return {
+        data: [],
+        isLoading: queries.some((query) => query.isLoading),
+        isError: queries.some((query) => query.isError),
+    };
   };

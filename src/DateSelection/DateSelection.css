@@ -2,11 +2,19 @@
     display: flex;
     width: 100%;
     justify-content: center;
-    gap: 20px;
+    align-items: center;
+    flex-direction: column;
 }
 
-.date-input-wrapper {
-    gap: 20px;
+p{
+    font-size: 10px;
+}
+
+.date-input-container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 20px; 
 }
 
 .date-label {

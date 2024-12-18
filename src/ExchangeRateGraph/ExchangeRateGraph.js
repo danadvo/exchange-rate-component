@@ -4,9 +4,9 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { formatDate, CustomTooltip, customLegend } from './utils';
 
 const ExchangeRateGraph = ({ data }) => {
-  const formattedData = data.map((day) => ({
-    date: formatDate(day.timestamp), 
-    ILS: day.rates?.ILS || 0, 
+  const formattedData = data.map(({ date , ILSRate }) => ({
+    date: formatDate(date), 
+    ILS: ILSRate || 0, 
   }));
 
   const calcPercentageChange = (data) => {
@@ -24,7 +24,6 @@ const ExchangeRateGraph = ({ data }) => {
   };
 
   const dataWithPercentageChange = calcPercentageChange(formattedData);
-
   return (
     <div className="exchange-rate-graph">
         <ResponsiveContainer width="100%" height="100%" >

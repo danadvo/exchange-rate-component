@@ -1,9 +1,7 @@
-export const formatDate = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const year = String(date.getUTCFullYear()).slice(2); 
-    return `${day}/${month}/${year}`;
+export const formatDate = (dateStr) => {
+    const [year, month, day] = dateStr.split('-');
+    const shortYear = year.slice(-2); 
+    return `${day}/${month}/${shortYear}`;
   };
 
 export const customLegend = (v) => v === 'ILS'? 'ILS' : v === "percentChange" ? "% Change" : undefined;
